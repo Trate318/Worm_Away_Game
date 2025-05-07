@@ -11,13 +11,16 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject sprite;
     private Rigidbody2D rb;
     private Vector2 movement;
+    private float direction;
 
     [Header("Movement")]
 
     [SerializeField] private float speed;
     [SerializeField] private float boostSpeed;
     private bool isBoosting;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float LerpRotSpeed;
+    [SerializeField] private float stepRotSpeed;
+    private float angle;
 
     void Start()
     {
@@ -27,28 +30,24 @@ public class Player : MonoBehaviour
     void Update()
     {    
         Movement();
-        FollowMouse();
+        Rotation();
     }
 
     private void Movement()
     {
-        if (Input.GetKey(KeyCode.Space)) {
-            rb.velocity = sprite.transform.up * boostSpeed;
-        }
-        else {
-            rb.velocity = sprite.transform.up * speed;
-        }
-        
+        rb.velocity = sprite.transform.up * (isBoosting ? boostSpeed : speed);    
     }
 
-    private void FollowMouse()
+    private void Rotation()
     {
-        // Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+        direction = Input.GetAxisRaw("Horizontal");   
+        Debug.Log(direction);
+        // float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg - 90;
         float currentAngle = sprite.transform.eulerAngles.z;
-        float angle = Mathf.LerpAngle(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
+        float targetAngle = currentAngle - direction * stepRotSpeed;
+        angle = Mathf.LerpAngle(currentAngle, targetAngle, LerpRotSpeed * Time.deltaTime);
         
-        sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+        // if (Input.GetAxisRaw("Horizontal") != 0)
+            sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
