@@ -385,7 +385,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -700,6 +700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 73096908}
   speed: 4
+  boostSpeed: 8
   rotationSpeed: 6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

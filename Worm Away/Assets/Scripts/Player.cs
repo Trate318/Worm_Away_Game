@@ -13,7 +13,10 @@ public class Player : MonoBehaviour
     private Vector2 movement;
 
     [Header("Movement")]
+
     [SerializeField] private float speed;
+    [SerializeField] private float boostSpeed;
+    private bool isBoosting;
     [SerializeField] private float rotationSpeed;
 
     void Start()
@@ -29,7 +32,13 @@ public class Player : MonoBehaviour
 
     private void Movement()
     {
-        rb.velocity = sprite.transform.up * speed;
+        if (Input.GetKey(KeyCode.Space)) {
+            rb.velocity = sprite.transform.up * boostSpeed;
+        }
+        else {
+            rb.velocity = sprite.transform.up * speed;
+        }
+        
     }
 
     private void FollowMouse()
@@ -41,6 +50,5 @@ public class Player : MonoBehaviour
         float angle = Mathf.LerpAngle(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
         
         sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
-
     }
 }
