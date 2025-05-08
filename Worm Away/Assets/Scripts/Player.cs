@@ -41,13 +41,9 @@ public class Player : MonoBehaviour
     private void Rotation()
     {
         direction = Input.GetAxisRaw("Horizontal");   
-        Debug.Log(direction);
-        // float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg - 90;
         float currentAngle = sprite.transform.eulerAngles.z;
         float targetAngle = currentAngle - direction * stepRotSpeed;
         angle = Mathf.LerpAngle(currentAngle, targetAngle, LerpRotSpeed * Time.deltaTime);
-        
-        // if (Input.GetAxisRaw("Horizontal") != 0)
-            sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+        sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
