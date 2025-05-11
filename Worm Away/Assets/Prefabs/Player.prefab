@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 2964237058310583796}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -260,11 +260,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 7868529042777931608}
-  maxSpeed: 10
-  baseSpeed: 4
-  normalAccel: 1
-  fastAccel: 1
-  fastDecel: 1
+  maxSpeed: 8
+  baseSpeed: 3
+  normalAccel: 0.4
+  fastAccel: 0.9
+  fastDecel: 0.8
   frictionAmount: 1
   LerpRotSpeed: 30
   stepRotSpeed: 10
@@ -317,7 +317,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

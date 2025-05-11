@@ -675,26 +675,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 274716646345458649, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: maxSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 274716646345458649, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: baseSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 274716646345458649, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: fastAccel
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 274716646345458649, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: fastDecel
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 274716646345458649, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: normalAccel
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 4239677616053874609, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -734,14 +714,6 @@ PrefabInstance:
     - target: {fileID: 4239677616053874609, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4797656835659014162, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7130058852285941815, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
-      propertyPath: m_LinearDrag
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7338610441059433028, guid: 5630e3d5e576a403ab3df4d2f04afeb0, type: 3}
       propertyPath: m_Name
