@@ -1,25 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {  
     [SerializeField] private GameObject sprite;
     private Rigidbody2D rb;
-    private Vector2 movement;
     private Vector2 direction;
 
-    [Header("Movement")]
-    [SerializeField] private float speed;
-    [SerializeField] private float maxSpeedChange;
-    [SerializeField] private float accelSpeed;
-    [SerializeField] private float maxBoostSpeed;
-    [SerializeField] private float boostSpeed;
-    private bool isBoosting;
+    [Header("Translational Movement")]
+    public float frictionAmount;
+    [Header("Rotational Movement")]
     [SerializeField] private float LerpRotSpeed;
     [SerializeField] private float stepRotSpeed;
     private float angle;
@@ -32,25 +22,37 @@ public class Player : MonoBehaviour
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.y = Input.GetAxisRaw("Vertical");
         
-        Rotation();
 
-        if (Input.GetKeyDown(KeyCode.G)) {
-            rb.AddForce(Vector2.down* 10);
+        if (Input.GetKeyDown(KeyCode.Space)) { // boost
+            rb.AddForce(sprite.transform.up * 1000);
         }
+
+        Rotation();
     }
     void FixedUpdate() {
-        if (isBoosting) {
-            ;
-        }   
-        else {
             Movement();
-        }
     }
 
+    public float maxSpeed;
+    public float baseSpeed;
+    public float accelaration;
+    public float decelaration;
+    public float movement;
+    public float vel;
+    public float curVel;
+    public bool hello;
     private void Movement() {
-        Vector2 targetSpeed = sprite.transform.up * speed ;
-        Vector2 speedDif = targetSpeed - rb.velocity;
-        rb.AddForce(movement);
+
+
+        Vector2 targetSpeed = sprite.transform.up * (direction.y == 1 ? maxSpeed : baseSpeed);
+        Vector2 curDirectionalSpeed = rb.velocity.normalized * ScalarProjection(rb.velocity, sprite.transform.up);
+        Vector2 speedDif = targetSpeed - curDirectionalSpeed;
+        rb.AddForce(speedDif);
+        
+        
+        rb.AddForce(rb.velocity * -frictionAmount); // constant drag so i can more easily change it in code
+        vel = rb.velocity.magnitude;
+        curVel = curDirectionalSpeed.magnitude;
     }
 
     private void Rotation() {
@@ -58,5 +60,9 @@ public class Player : MonoBehaviour
         float targetAngle = currentAngle - direction.x * stepRotSpeed;
         angle = Mathf.LerpAngle(currentAngle, targetAngle, LerpRotSpeed * Time.deltaTime);
         sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private float ScalarProjection(Vector2 projectedVector, Vector2 baseVector) {
+        return Vector2.Dot(projectedVector, baseVector) / baseVector.magnitude;
     }
 }
