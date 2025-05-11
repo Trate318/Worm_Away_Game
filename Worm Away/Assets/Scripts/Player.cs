@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
     private Vector2 direction;
 
     [Header("Translational Movement")]
+    public float maxSpeed;
+    public float baseSpeed;
+    public float normalAccel;
+    public float fastAccel;
+    public float fastDecel;
     public float frictionAmount;
     [Header("Rotational Movement")]
     [SerializeField] private float LerpRotSpeed;
@@ -33,26 +38,22 @@ public class Player : MonoBehaviour
             Movement();
     }
 
-    public float maxSpeed;
-    public float baseSpeed;
-    public float accelaration;
-    public float decelaration;
-    public float movement;
+    
     public float vel;
-    public float curVel;
-    public bool hello;
     private void Movement() {
 
 
         Vector2 targetSpeed = sprite.transform.up * (direction.y == 1 ? maxSpeed : baseSpeed);
-        Vector2 curDirectionalSpeed = rb.velocity.normalized * ScalarProjection(rb.velocity, sprite.transform.up);
-        Vector2 speedDif = targetSpeed - curDirectionalSpeed;
-        rb.AddForce(speedDif);
+        float forwardVelocity = ScalarProjection(rb.velocity, sprite.transform.up);
+        Vector2 speedDif = targetSpeed - rb.velocity.normalized * forwardVelocity;
+        float accelRate = direction.y == 0 ? normalAccel : direction.y == 1 ? fastAccel : fastDecel;
+        rb.AddForce(speedDif * accelRate);
         
-        
-        rb.AddForce(rb.velocity * -frictionAmount); // constant drag so i can more easily change it in code
+        if (forwardVelocity < 0) {
+        Vector2 counterForce = -rb.velocity.normalized * frictionAmount;
+        rb.AddForce(counterForce);
+        }
         vel = rb.velocity.magnitude;
-        curVel = curDirectionalSpeed.magnitude;
     }
 
     private void Rotation() {
