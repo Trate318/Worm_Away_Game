@@ -132,12 +132,14 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnTriggerStay2D(Collider2D other) {
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Sand")) {
+            terrain = Terrain.Air;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Sand")) {
             terrain = Terrain.Sand;
-        }
-        else if (other.CompareTag("Air")) {
-            terrain = Terrain.Air;
         }
     }
 }
