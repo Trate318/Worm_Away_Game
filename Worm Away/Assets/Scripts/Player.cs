@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
         vel = rb.velocity.magnitude; // debug help
 
         dashCooldownTimer += Time.deltaTime;
-        if (dashCooldownTimer > dashCooldown)
+        if (dashCooldownTimer > dashCooldown && terrain == Terrain.Sand)
         {
             canDash = true;
         }
@@ -58,13 +58,13 @@ public class Player : MonoBehaviour
 
         switch (terrain) {
             case Terrain.Sand:
-                Debug.Log("you're in sand");
+                // Debug.Log("you're in sand");
                 SandRotation();
                 rb.gravityScale = 0;
                 rb.drag = 1;
                 break;
             case Terrain.Air:
-                Debug.Log("you're in the air");
+                // Debug.Log("you're in the air");
                 AirRotation();
             rb.gravityScale = 2;
             rb.drag = 0.2f;
@@ -98,12 +98,16 @@ public class Player : MonoBehaviour
         Vector2 targetSpeed = sprite.transform.up * (direction.y == 1 ? maxSpeed : baseSpeed);
         forwardVelocity = ScalarProjection(rb.velocity, sprite.transform.up);
         Vector2 speedDif = targetSpeed - rb.velocity.normalized * forwardVelocity;
+
+        // Vector2 targetSpeed = direction.normalized * maxSpeed;
+        // Vector2 speedDif = targetSpeed - rb.velocity;
         float accelRate = direction.y == 0 ? normalAccel : direction.y == 1 ? fastAccel : fastDecel;
         
         rb.AddForce(speedDif * accelRate);
 
+
+        
         Vector2 counterForce = -rb.velocity.normalized * frictionAmount;
-        rb.drag = 1;
         // rb.AddForce(counterForce); // friction
         if (forwardVelocity < 0) // doubled if moving too fast or slow
             rb.AddForce(counterForce) ;
@@ -137,7 +141,7 @@ public class Player : MonoBehaviour
             terrain = Terrain.Air;
         }
     }
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("Sand")) {
             terrain = Terrain.Sand;
         }
